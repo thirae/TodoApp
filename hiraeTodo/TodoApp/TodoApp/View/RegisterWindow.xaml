@@ -1,0 +1,16 @@
+﻿<Window x:Class="TodoApp.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TodoApp"
+        mc:Ignorable="d"
+        Title="Register" Height="500" Width="800">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="60" Margin="232,48,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="303" FontSize= "18"/>
+        <Label Content="期限" HorizontalAlignment="Left" Height="44" Margin="62,59,0,0" VerticalAlignment="Top" Width="124" FontSize= "18"/>
+        <Button Content="登録" HorizontalAlignment="Left" Height="48" Margin="317,408,0,0" VerticalAlignment="Top" Width="121" FontSize= "18"/>
+        <TextBox HorizontalAlignment="Left" Height="203" Margin="177,163,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="413" FontSize= "18"/>
+
+    </Grid>
+</Window>
