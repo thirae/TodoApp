@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using TodoApp.ViewModels;
 
 namespace TodoApp
 {
@@ -21,11 +10,24 @@ namespace TodoApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<Task> tasks = new ObservableCollection<Task>();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            DataContext = new MainWindowVM();
+            TaskDataGrid.ItemsSource = tasks;
+
+            // MVVM用
+            // DataContext = new MainWindowVM();
+        }
+
+        private void RegButtonClick(object sender, RoutedEventArgs e)
+        {
+            tasks.Add(new Task("sssssssssss", "sasa"));
+            TaskDataGrid.ItemsSource = tasks;
+            // RegisterWindow registerWindow = new RegisterWindow(this);
+            // registerWindow.ShowDialog();
         }
     }
 }

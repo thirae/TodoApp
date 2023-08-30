@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TodoApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
     <Grid>
@@ -11,27 +10,28 @@
             <ColumnDefinition Width="207*"/>
             <ColumnDefinition Width="901*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Margin="10" Grid.ColumnSpan="2" AutoGenerateColumns="False">
+        <DataGrid Margin="10" Grid.ColumnSpan="2" 
+                  x:Name = "TaskDataGrid" AutoGenerateColumns="False">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="" Width="60"/>
                 <!--  期限の表示  -->
                 <DataGridTextColumn
                     Width="150"
-                    Binding="{Binding Date}"
+                    Binding="{Binding DeadLine}"
                     Header="期限" />
                 <!-- タスクの表示  -->
                 <DataGridTextColumn
                     Width="500"
-                    Binding="{Binding Task}"
+                    Binding="{Binding Done}"
                     Header="タスク" />
-                <DataGridCheckBoxColumn Header="" Width="60"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="登録" 
-                Command="{Binding RegisterCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="578,12,0,0" VerticalAlignment="Top" Width="50"/>
+        <Button Content="登録" x:Name = "RegsterButton" Click = "RegButtonClick"
+                Command="{Binding ShowWindowCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="319,0,0,365.667" VerticalAlignment="Bottom" Width="50"/>
     </Grid>
 </Window>

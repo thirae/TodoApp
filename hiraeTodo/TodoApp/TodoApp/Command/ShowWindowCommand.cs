@@ -49,8 +49,8 @@ namespace TodoApp
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            RegisterWindow rw = new RegisterWindow();
-            rw.ShowDialog();
+            // RegisterWindow rw = new RegisterWindow();
+            // rw.ShowDialog();
         }
     }
 }

@@ -1,10 +1,27 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
+using TodoApp.ViewModels;
 
 namespace TodoApp
 {
     class RegisterCommand : ICommand
     {
+        /// <summary>
+        /// コマンドを読み出す側のクラス（View Model）を保持するプロパティ
+        /// </summary>
+        private RegisterWindowVM _view { get; set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// コマンドで処理したいクラス(View Model)をここで受け取る
+        /// </summary>
+        /// <param name="view"></param>
+        public RegisterCommand(RegisterWindowVM view)
+        {
+            _view = view;
+        }
+
         /// <summary>
         /// コマンドのルールとして必ず実装しておくイベントハンドラ
         /// </summary>
@@ -29,6 +46,7 @@ namespace TodoApp
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
+
         }
     }
 }

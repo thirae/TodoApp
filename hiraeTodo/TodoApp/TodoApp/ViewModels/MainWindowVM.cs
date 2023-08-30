@@ -20,14 +20,15 @@ namespace TodoApp.ViewModels
         #endregion
 
         // コマンドを格納するプロパティ
-        public ShowWindowCommand RegisterCommand { get; private set; }
+        public ShowWindowCommand ShowWindowCommand { get; private set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public MainWindowVM()
         {
-            RegisterCommand = new ShowWindowCommand(this);
+            // コマンドを実装したクラスをプロパティに代入
+            ShowWindowCommand = new ShowWindowCommand(this);
         }
     }
 }
