@@ -10,8 +10,9 @@
             <ColumnDefinition Width="207*"/>
             <ColumnDefinition Width="901*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Margin="10" Grid.ColumnSpan="2" 
-                  x:Name = "TaskDataGrid" AutoGenerateColumns="False">
+        <DataGrid Margin="3,-3,-0.667,-2.333" Grid.ColumnSpan="2" 
+                  x:Name = "TaskDataGrid" AutoGenerateColumns="False"
+                  SourceUpdated="TaskDataGrid_SourceUpdated">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -22,16 +23,30 @@
                 <!--  期限の表示  -->
                 <DataGridTextColumn
                     Width="150"
-                    Binding="{Binding DeadLine}"
+                    Binding="{Binding DeadLine,NotifyOnSourceUpdated=True,
+                    UpdateSourceTrigger=LostFocus}"
                     Header="期限" />
                 <!-- タスクの表示  -->
                 <DataGridTextColumn
-                    Width="500"
-                    Binding="{Binding Done}"
+                    Width="470"
+                    Binding="{Binding Done,NotifyOnSourceUpdated=True,
+                    UpdateSourceTrigger=LostFocus}"
                     Header="タスク" />
+                <!-- 削除ボタンの表示  -->
+                <DataGridTemplateColumn Width="109" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                x:Name="DeleteButton"
+                                Click="DeleteButton_Click"
+                                Content="削除"
+                                Tag="{Binding}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="登録" x:Name = "RegsterButton" Click = "RegButtonClick"
-                Command="{Binding ShowWindowCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="319,0,0,365.667" VerticalAlignment="Bottom" Width="50"/>
+                Command="{Binding ShowWindowCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="580,0,0,367.667" VerticalAlignment="Bottom" Width="47"/>
     </Grid>
 </Window>

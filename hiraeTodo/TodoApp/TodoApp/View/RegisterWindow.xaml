@@ -14,7 +14,7 @@
                Height="44" Margin="62,59,0,0" VerticalAlignment="Top"
                Width="124" FontSize= "18"/>
         <Button Content="登録" Command ="{Binding RegisterCommand}" 
-                x:Name = "RegisterButton"
+                x:Name = "RegisterButton" Click="RegButtonClick"
                 HorizontalAlignment="Left" Height="48" Margin="317,408,0,0"
                 VerticalAlignment="Top" Width="121" FontSize= "18"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding Task}"
