@@ -3,10 +3,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace TodoApp
 {
@@ -15,10 +15,9 @@ namespace TodoApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<Task> tasks;
-
         // ファイルパス
         private string csvPath = "save.csv";
+        public ObservableCollection<Task> tasks;
 
         public MainWindow()
         {
@@ -28,7 +27,11 @@ namespace TodoApp
             TaskDataGrid.ItemsSource = tasks;
         }
 
-        // CsvFile読み込み
+        /// <summary>
+        /// ファイル読み込みメソッド
+        /// </summary>
+        /// <param name="filePath">csvファイルのパス</param>
+        /// <returns></returns>
         public ObservableCollection<Task> ReadCsvFile(string filePath)
         {
             var collection = new ObservableCollection<Task>();
@@ -54,15 +57,17 @@ namespace TodoApp
                         // カンマで分割した文字列の配列を取得
                         var cells = parser.ReadFields();
 
+                        bool isTrue = bool.Parse(cells[0]);
+
                         // 登録
-                        collection.Add(new Task(cells[1], cells[2]));
+                        collection.Add(new Task(isTrue,cells[1], cells[2]));
                     }
                 }
             }
             catch (Exception ex)
             {
                 // エラー内容を出力
-                Debug.WriteLine(ex.Message);
+                Debug.WriteLine("エラーが発生しました: ",ex.Message);
             }
             return collection;
         }
@@ -75,35 +80,16 @@ namespace TodoApp
             // 書き込み処理
             using (var sw = new StreamWriter(csvPath,false, Encoding.Unicode))
             {
-                // 列ヘッダ
-                sw.WriteLine(string.Join(",",TaskDataGrid.Columns
-                    .Select(x =>
-                    {
-                        if (x.Header is string headerText)
-                        {
-                            return headerText;
-                        }
-                        //else if (TaskDataGrid)
-                        //{
-                        //
-                        //}
-                        else
-                        {
-                            return string.Empty;
-                        }
-                    })));
-
                 // セルの内容
-                foreach (var item in TaskDataGrid.Items)
+                foreach (var item in tasks)
                 {
-                    sw.WriteLine(string.Join(",",TaskDataGrid.Columns
-                        .Select(x => x.OnCopyingCellClipboardContent(item)?.ToString())));
+                    sw.WriteLine($"{item.IsSelected},{item.DeadLine},{item.Done}");
                 }
             }
         }
 
         /// <summary>
-        /// 
+        /// タスク削除ボタンイベント
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,6 +120,42 @@ namespace TodoApp
         private void TaskDataGrid_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
         {
             FileSave();
+        }
+
+        /// <summary>
+        /// チェックボックスをクリックした際のイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckBox_Clicked(object sender, RoutedEventArgs e)
+        {
+            FileSave();
+        }
+
+        /// <summary>
+        /// 編集の際カンマが入力されたらキャンセル
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Contains(","))
+            {
+                e.Handled = true; // カンマが含まれている場合、入力をキャンセル
+            }
+        }
+
+        /// <summary>
+        /// ペーストを禁止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                e.Handled = true; // Ctrl+V キー操作をキャンセル
+            }
         }
     }
 }

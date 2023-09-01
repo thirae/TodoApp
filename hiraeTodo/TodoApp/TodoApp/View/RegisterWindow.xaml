@@ -6,19 +6,23 @@
         mc:Ignorable="d"
         Title="Register" Height="500" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="60"
+        <TextBox HorizontalAlignment="Left" Height="60" MaxLength="50"
                  Margin="232,48,0,0" TextWrapping="Wrap" Text="{Binding Date}"
+                 PreviewTextInput="TextBox_PreviewTextInput"
+                 PreviewKeyDown="TextBox_PreviewKeyDown"
                  x:Name="DeadlineText"
                  VerticalAlignment="Top" Width="303" FontSize= "18"/>
         <Label Content="期限" HorizontalAlignment="Left"
-               Height="44" Margin="62,59,0,0" VerticalAlignment="Top"
-               Width="124" FontSize= "18"/>
+               Height="44" Margin="127,49,0,0" VerticalAlignment="Top"
+               Width="93" FontSize= "30"/>
         <Button Content="登録" Command ="{Binding RegisterCommand}" 
                 x:Name = "RegisterButton" Click="RegButtonClick"
                 HorizontalAlignment="Left" Height="48" Margin="317,408,0,0"
                 VerticalAlignment="Top" Width="121" FontSize= "18"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding Task}"
-                 x:Name="TaskText"
+                 x:Name="TaskText" MaxLength="500"
+                 PreviewTextInput="TextBox_PreviewTextInput"
+                 PreviewKeyDown="TextBox_PreviewKeyDown"
                  Height="203" Margin="177,163,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="413" FontSize= "18"
                  AcceptsReturn = "True"/>

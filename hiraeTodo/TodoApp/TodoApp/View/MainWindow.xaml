@@ -19,21 +19,45 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="" Width="60"/>
+                <DataGridTemplateColumn IsReadOnly="True" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay,
+                                NotifyOnSourceUpdated=True,UpdateSourceTrigger=PropertyChanged}"
+                                Click="CheckBox_Clicked" x:Name="TaskCheck"
+                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <!--  期限の表示  -->
-                <DataGridTextColumn
-                    Width="150"
+                <DataGridTextColumn Width="150"
                     Binding="{Binding DeadLine,NotifyOnSourceUpdated=True,
-                    UpdateSourceTrigger=LostFocus}"
-                    Header="期限" />
+                    UpdateSourceTrigger=LostFocus}" Header="期限">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput" />
+                            <EventSetter Event="PreviewKeyDown" Handler="TextBox_PreviewKeyDown" />
+                            <Setter Property="MaxLength" Value="50" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
                 <!-- タスクの表示  -->
                 <DataGridTextColumn
-                    Width="470"
+                    Width="440"
                     Binding="{Binding Done,NotifyOnSourceUpdated=True,
-                    UpdateSourceTrigger=LostFocus}"
-                    Header="タスク" />
+                    UpdateSourceTrigger=LostFocus}" Header="タスク">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <!-- イベント設定 カンマとコピーペースト制限  -->
+                            <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput" />
+                            <EventSetter Event="PreviewKeyDown" Handler="TextBox_PreviewKeyDown" />
+                            <Setter Property="MaxLength" Value="500" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                    
                 <!-- 削除ボタンの表示  -->
-                <DataGridTemplateColumn Width="109" Header="">
+                <DataGridTemplateColumn Width="109" Header="削除">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button
@@ -47,6 +71,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="登録" x:Name = "RegsterButton" Click = "RegButtonClick"
-                Command="{Binding ShowWindowCommand}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="580,0,0,367.667" VerticalAlignment="Bottom" Width="47"/>
+                Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="586,0,0,442.667" VerticalAlignment="Bottom" Width="47" RenderTransformOrigin="0.418,0.583"/>
     </Grid>
 </Window>
